@@ -150,7 +150,7 @@ def buildAndSendCosetteRequest(baseDict, sql, sol):
 
 
 def checkKeywords(startWord:str, endWords:list):
-    global sql,sol
+    #global sql,sol
 
     startWord = startWord.lower()
 
@@ -188,37 +188,37 @@ def checkKeywords(startWord:str, endWords:list):
 
 
 def checkColumns(sqlPath="", solPath=""):
-    global sql,sol
+    #global sql,sol
     setup(sqlPath, solPath)
     return checkKeywords("SELECT ", ["FROM", "WHERE", "GROUP BY", "ORDER BY", "LIMIT", ";", "HAVING"])
 
 
 def checkTables(sqlPath="", solPath=""):
-    global sql,sol
+    #global sql,sol
     setup(sqlPath, solPath)
     return checkKeywords("FROM ", ["SELECT", "WHERE", "GROUP BY", "ORDER BY", "LIMIT", ";", "HAVING"])
 
 
 def checkCondition(sqlPath="", solPath=""):
-    global sql,sol
+    #global sql,sol
     setup(sqlPath, solPath)
     return checkKeywords("WHERE ", ["SELECT", "FROM", "GROUP BY", "ORDER BY", "LIMIT", ";", "HAVING"])
 
 
 def checkOrder(sqlPath="", solPath=""):
-    global sql,sol
+    #global sql,sol
     setup(sqlPath, solPath)
     return checkKeywords("ORDER BY ", ["SELECT", "WHERE", "GROUP BY", "FROM", "LIMIT", ";", "HAVING"])
 
 
 def checkGroup(sqlPath="", solPath=""):
-    global sql, sol
+    #global sql, sol
     setup(sqlPath, solPath)
     return checkKeywords("GROUP BY ", ["SELECT", "WHERE", "FROM BY", "ORDER BY", "LIMIT", ";", "HAVING"])
 
 
 def checkEquality(sqlPath="", solPath=""):
-    global sql, sol
+    #global sql, sol
     setup(sqlPath, solPath)
 
     if sql == sol:
