@@ -51,8 +51,6 @@ def setDBName(database):
 
     
 def run(sql: str):
-    global __db
-
     if __db.startswith("dbiu.") and not __db.endswith(".db"):
         with importlib.resources.path('dbiu_databases', "base.db") as db_path:
             return __run(sql, db_path)
