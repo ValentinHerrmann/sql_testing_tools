@@ -165,8 +165,8 @@ def _condition(token, alias_map, baseDict: dict):
         return f"(NOT {left.lower()} LIKE {right})"
     if operator.value.lower().strip() == "not like":
         return f"(NOT {left.lower()} LIKE {right})"
-    if operator.value.strip() == "=" and "%" not in right and "_" not in right:
-        return f"{left.lower()} LIKE {right}"
+    if operator.value.strip() == "=" and rightLiteral and "%" not in right and "_" not in right:
+        return f"{left.lower()} LIKE {right}" # less strict testing allowing minor deviations in upper/lower case
 
 
 
