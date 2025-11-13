@@ -121,10 +121,10 @@ res = checkEquality()
 
 
 
-
-
-
 ### Changelog
+
+##### V 0.2.11
+- fixed irrelevant equality order if both sides aren't literals
 
 ##### V 0.2.10
 - fixed part checks if keywords are in wrong order
