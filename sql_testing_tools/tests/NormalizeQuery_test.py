@@ -224,3 +224,27 @@ class NormalizeQuery_test(unittest.TestCase):
     def test_a28_kreuzproduktA1(self):
         nr = '28'
         self.helperEqual(nr)
+        
+        
+    def test_a29_kreuzproduktA5(self):
+        
+        nr = '27'
+        He.setup("sql_testing_tools/tests/v1/a"+nr+".sql", "sql_testing_tools/tests/v2/a"+nr+".sql")
+
+        col = He.checkColumns()
+        tab = He.checkTables()
+        cond = He.checkCondition()
+        grp = He.checkGroup()
+        ord = He.checkOrder()
+
+        msg = "\n\n"
+
+        if(cond==""):
+            msg += "Bedingungen werden als korrekt angezeigt, obwohl falsch\n"
+            
+
+        if(col != "" or tab != "" or grp != "" or ord != ""):
+            msg += tab + "\n" + grp + "\n" + ord
+
+        if msg != "\n\n":
+            self.fail(msg)
