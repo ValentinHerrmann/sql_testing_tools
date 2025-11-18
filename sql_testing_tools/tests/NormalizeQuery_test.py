@@ -14,9 +14,10 @@ import Helper as He
 Ba.setDBName("dbiu.bayern")
 
 
-class NormalizeQuery_test(unittest.TestCase):
+class NormalizeQueryTest(unittest.TestCase):
 
     maxDiff = None
+    testSampleBasePath = "sql_testing_tools/tests/"
 
 
     def readFile(self,path: str):
@@ -25,7 +26,7 @@ class NormalizeQuery_test(unittest.TestCase):
             return file.read()
 
     def helperEqual(self, nr: str):
-        He.setup("sql_testing_tools/tests/v1/a"+nr+".sql", "sql_testing_tools/tests/v2/a"+nr+".sql")
+        He.setup(self.testSampleBasePath + "v1/a"+nr+".sql", self.testSampleBasePath + "v2/a"+nr+".sql")
         print("\n\nTest "+nr+"------------------------------")
         print("V1: "+He.sql)
         print("V2: "+He.sol)
@@ -33,18 +34,18 @@ class NormalizeQuery_test(unittest.TestCase):
         if He.sol != He.sql:
             self.fail("\n" + He.sol + "\n" + He.sql)
 
-        col = He.checkColumns()
-        tab = He.checkTables()
-        grp = He.checkGroup()
-        ord = He.checkOrder()
+        ch_col = He.checkColumns()
+        ch_tab = He.checkTables()
+        ch_grp = He.checkGroup()
+        ch_ord = He.checkOrder()
 
-        if(col != "" or tab != "" or grp != "" or ord != ""):
-            self.fail("\n" + col + "\n" + tab + "\n" + grp + "\n" + ord)
+        if(ch_col != "" or ch_tab != "" or ch_grp != "" or ch_ord != ""):
+            self.fail("\n" + ch_col + "\n" + ch_tab + "\n" + ch_grp + "\n" + ch_ord)
             
     def helperUnequal(self, nr:str):
         td = Ba.getTableDict()
-        q1 = He.normalizeSQLQuery(self.readFile("sql_testing_tools/tests/v1/a"+nr+".sql"), td)
-        q2 = He.normalizeSQLQuery(self.readFile("sql_testing_tools/tests/v2/a"+nr+".sql"), td)
+        q1 = He.normalizeSQLQuery(self.readFile(self.testSampleBasePath + "v1/a"+nr+".sql"), td)
+        q2 = He.normalizeSQLQuery(self.readFile(self.testSampleBasePath + "v2/a"+nr+".sql"), td)
         print("\n\nTest "+nr+"------------------------------")
         print("V1: "+He.sql)
         print("V2: "+He.sol)
@@ -179,7 +180,7 @@ class NormalizeQuery_test(unittest.TestCase):
 
     def test_a22_GroupIsolated(self):
         nr='22'
-        res = He.checkGroup("sql_testing_tools/tests/v1/a"+nr+".sql", "sql_testing_tools/tests/v2/a"+nr+".sql")
+        res = He.checkGroup(self.testSampleBasePath + "v1/a"+nr+".sql", self.testSampleBasePath + "v2/a"+nr+".sql")
 
         if res == "":
             self.fail("Different grouping not recognized")
@@ -204,19 +205,18 @@ class NormalizeQuery_test(unittest.TestCase):
         nr = '27'
         He.setup("sql_testing_tools/tests/v1/a"+nr+".sql", "sql_testing_tools/tests/v2/a"+nr+".sql")
 
-        col = He.checkColumns()
-        tab = He.checkTables()
-        grp = He.checkGroup()
-        ord = He.checkOrder()
+        ch_col = He.checkColumns()
+        ch_tab = He.checkTables()
+        ch_grp = He.checkGroup()
+        ch_ord = He.checkOrder()
 
         msg = "\n\n"
 
-        if(col==""):
+        if(ch_col==""):
             msg += "Spalten werden als richtig angezeigt, obwohl falsch\n"
 
-        if(tab != "" or grp != "" or ord != ""):
-            msg += tab + "\n" + grp + "\n" + ord
-
+        if(ch_tab != "" or ch_grp != "" or ch_ord != ""):
+            msg += ch_tab + "\n" + ch_grp + "\n" + ch_ord
         if msg != "\n\n":
             self.fail(msg)
             
@@ -231,20 +231,19 @@ class NormalizeQuery_test(unittest.TestCase):
         nr = '27'
         He.setup("sql_testing_tools/tests/v1/a"+nr+".sql", "sql_testing_tools/tests/v2/a"+nr+".sql")
 
-        col = He.checkColumns()
-        tab = He.checkTables()
-        cond = He.checkCondition()
-        grp = He.checkGroup()
-        ord = He.checkOrder()
-
+        ch_col = He.checkColumns()
+        ch_tab = He.checkTables()
+        ch_cond = He.checkCondition()
+        ch_grp = He.checkGroup()
+        ch_ord = He.checkOrder()    
         msg = "\n\n"
 
-        if(cond==""):
+        if(ch_cond==""):
             msg += "Bedingungen werden als korrekt angezeigt, obwohl falsch\n"
             
 
-        if(col != "" or tab != "" or grp != "" or ord != ""):
-            msg += tab + "\n" + grp + "\n" + ord
+        if(ch_col != "" or ch_tab != "" or ch_grp != "" or ch_ord != ""):
+            msg += ch_tab + "\n" + ch_grp + "\n" + ch_ord
 
         if msg != "\n\n":
             self.fail(msg)
