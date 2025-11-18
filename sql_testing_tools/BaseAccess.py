@@ -86,7 +86,7 @@ def runFromFile(path: str):
 
 
 def runAndGetStringTable_fromFile(path: str, count: int = 5, max_line_length: int = 85):
-    try:max
+    try:
         headers, rows = runFromFile(path)
         result_count = len(rows)
         rows = rows[:count]
