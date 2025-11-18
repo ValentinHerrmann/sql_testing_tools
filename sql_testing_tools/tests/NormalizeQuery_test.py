@@ -203,7 +203,7 @@ class NormalizeQueryTest(unittest.TestCase):
 
     def test_a27_detailCheckWrongOrder(self):
         nr = '27'
-        He.setup("sql_testing_tools/tests/v1/a"+nr+".sql", "sql_testing_tools/tests/v2/a"+nr+".sql")
+        He.setup(self.testSampleBasePath + "v1/a"+nr+".sql", self.testSampleBasePath + "v2/a"+nr+".sql")
 
         ch_col = He.checkColumns()
         ch_tab = He.checkTables()
@@ -228,8 +228,8 @@ class NormalizeQueryTest(unittest.TestCase):
         
     def test_a29_kreuzproduktA5(self):
         
-        nr = '27'
-        He.setup("sql_testing_tools/tests/v1/a"+nr+".sql", "sql_testing_tools/tests/v2/a"+nr+".sql")
+        nr = '29'
+        He.setup(self.testSampleBasePath + "v1/a"+nr+".sql", self.testSampleBasePath + "v2/a"+nr+".sql")
 
         ch_col = He.checkColumns()
         ch_tab = He.checkTables()
@@ -239,7 +239,11 @@ class NormalizeQueryTest(unittest.TestCase):
         msg = "\n\n"
 
         if(ch_cond==""):
-            msg += "Bedingungen werden als korrekt angezeigt, obwohl falsch\n"
+            msg += "Bedingungen werden als korrekt angezeigt, obwohl falsch:\n"
+            msg += ("-------------------------------------\n")
+            msg += "V1: "+He.sql + "\n"
+            msg += "V2: "+He.sol + "\n"
+            msg += ("-------------------------------------\n")
             
 
         if(ch_col != "" or ch_tab != "" or ch_grp != "" or ch_ord != ""):
