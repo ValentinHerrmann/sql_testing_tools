@@ -41,7 +41,7 @@ def setup(sql_path,sol_path):
 
 def normalizeSQLQuery(query, base_dict):
     try:
-        query = query.replace("\"", "'")
+        query = query.replace("\"", "'").replace("\n", " ").replace("\r", " ").replace("\t", " ").replace("  ", " ").strip()
         parsed = sqlparse.parse(query)[0]
         parsed.tokens = [token for token in parsed.tokens if not token.is_whitespace]
     except Exception as e:
