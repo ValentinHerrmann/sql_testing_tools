@@ -248,3 +248,7 @@ class NormalizeQuery_test(unittest.TestCase):
 
         if msg != "\n\n":
             self.fail(msg)
+
+    def test_a30_kreuzproduktA5(self):
+        nr = '30'
+        self.helperEqual(nr)
