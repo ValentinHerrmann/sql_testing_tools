@@ -1,6 +1,7 @@
 name: "🐛Bug: SQL Comparison Example"
 description: Parts or complete SQL queries to not lead to the intended results.
 labels: [bug]
+title: "Queries with [2-3 word query identification] should be [equal/unequal] but aren't"
 body:
 - type: markdown
   attributes:
