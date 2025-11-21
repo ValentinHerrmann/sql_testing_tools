@@ -123,9 +123,13 @@ res = checkEquality()
 
 ### Changelog
 
+##### V 0.2.13
+- Acccept `COUNT(colname)`, too (instead of just `COUNT(*)`)
+
 ##### V 0.2.12
 - fixed bug when having only one colum selected
 - fixed bug with nested conditions 
+- fixed memory problem with huge cross products (used to lead to build failed)
 
 ##### V 0.2.11
 - fixed irrelevant equality order if both sides aren't literals

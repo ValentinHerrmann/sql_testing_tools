@@ -331,3 +331,11 @@ class NormalizeQueryTest(unittest.TestCase):
             msg += "V2: "+He.sol + "\n"
             msg += ("-------------------------------------\n")
             self.fail(msg)
+            
+    def test_a34_count(self):
+        nr = '34'
+        self.helperEqual(nr)
+        
+    def test_a35_count_unequal(self):
+        nr = '35'
+        self.helperUnequal(nr)
