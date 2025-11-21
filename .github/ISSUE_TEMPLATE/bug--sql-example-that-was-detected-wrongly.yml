@@ -51,7 +51,11 @@ body:
     render: sql
   validations:
       required: true
-- type: checkbox
+- type: checkboxes
+  options:
+    - label: Overall
+    - label: Columns
+    - label: Tables
   attributes:
     label: Which aspects of the queries should be equal?
   validations:
