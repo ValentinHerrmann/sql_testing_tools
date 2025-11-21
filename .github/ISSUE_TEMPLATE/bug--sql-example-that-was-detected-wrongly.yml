@@ -4,7 +4,6 @@ labels: [bug]
 body:
 - type: markdown
   attributes:
-    placeholder: SQL-Comparison - Queries with XYZ should be equal, but are not.
     value: Thanks for taking the time to fill out this bug report.
   validations:
       required: true
