@@ -4,7 +4,7 @@ labels: [bug]
 body:
 - type: markdown
   attributes:
-    placeholder: SQL-Comparison: Queries with XYZ should be equal, but are not.
+    placeholder: SQL-Comparison - Queries with XYZ should be equal, but are not.
   validations:
       required: true
       
