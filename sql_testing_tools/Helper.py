@@ -100,7 +100,7 @@ def normalizeSQLQuery(query, base_dict):
 
     return " ".join(formatted_query)
 
-def findTableForColumn(data_dict, target_value, relevant_tables):
+def find_table_for_column(data_dict, target_value, relevant_tables):
     l = []
     for key, value_list in data_dict.items():
         if key.lower() in relevant_tables:
@@ -157,7 +157,7 @@ def buildAndSendCosetteRequest(base_dict, sql, sol):
     return ("ERR", err)
 
 
-def checkKeywords(start_word:str, end_words:list):
+def check_keywords(start_word:str, end_words:list):
     start_word = start_word.lower()
 
     if(start_word not in sol.lower() and start_word not in sql.lower()):
@@ -194,27 +194,27 @@ def checkKeywords(start_word:str, end_words:list):
 
 def checkColumns(sql_path="", sol_path=""):
     setup(sql_path, sol_path)
-    return checkKeywords(kw_sel+" ", [kw_frm, kw_whr, kw_grp, kw_ord, kw_lim, semcol, kw_hav])
+    return check_keywords(kw_sel+" ", [kw_frm, kw_whr, kw_grp, kw_ord, kw_lim, semcol, kw_hav])
 
 
 def checkTables(sql_path="", sol_path=""):
     setup(sql_path, sol_path)
-    return checkKeywords(kw_frm+" ", [kw_sel, kw_whr, kw_grp, kw_ord, kw_lim, semcol, kw_hav])
+    return check_keywords(kw_frm+" ", [kw_sel, kw_whr, kw_grp, kw_ord, kw_lim, semcol, kw_hav])
 
 
 def checkCondition(sql_path="", sol_path=""):
     setup(sql_path, sol_path)
-    return checkKeywords(kw_whr+" ", [kw_sel, kw_frm, kw_grp, kw_ord, kw_lim, semcol, kw_hav])
+    return check_keywords(kw_whr+" ", [kw_sel, kw_frm, kw_grp, kw_ord, kw_lim, semcol, kw_hav])
 
 
 def checkOrder(sql_path="", sol_path=""):
     setup(sql_path, sol_path)
-    return checkKeywords(kw_ord+" ", [kw_sel, kw_whr, kw_grp, kw_frm, kw_lim, semcol, kw_hav])
+    return check_keywords(kw_ord+" ", [kw_sel, kw_whr, kw_grp, kw_frm, kw_lim, semcol, kw_hav])
 
 
 def checkGroup(sql_path="", sol_path=""):
     setup(sql_path, sol_path)
-    return checkKeywords(kw_grp+" ", [kw_sel, kw_whr, kw_grp, kw_ord, kw_lim, semcol, kw_hav])
+    return check_keywords(kw_grp+" ", [kw_sel, kw_whr, kw_grp, kw_ord, kw_lim, semcol, kw_hav])
 
 
 def checkEquality(sql_path="", sol_path=""):
@@ -222,6 +222,21 @@ def checkEquality(sql_path="", sol_path=""):
 
     if sql == sol:
         return ""
+    
+    
+    sql_build_fail = ""
+    sol_build_fail = ""
+    try:
+        Ba.runAndGetStringTable_fromFile(sql_path)
+    except Exception as e:
+        sql_build_fail = str(e)
+    try:
+        Ba.runAndGetStringTable_fromFile(sol_path)
+    except Exception as e:
+        sol_build_fail = str(e)
+        
+    if(sql_build_fail != "" or sol_build_fail != ""):
+        return "\n\nFehler beim Ausführen der Abfrage. Vermutlich enthält die Abfrage Syntaxfehler:\n" + sql_build_fail + "\n" + sol_build_fail
 
     result = buildAndSendCosetteRequest(bd, sql, sol)
 
