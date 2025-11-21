@@ -46,12 +46,16 @@ def _select(select, alias_map, base_dict: dict, insideFunction=False):
             else:
                 select_tokens.append(f"{_identifier(token, alias_map,  base_dict).lower()} as {token.get_real_name().lower()}")
         elif isinstance(token, Function):
-            #select_tokens.append(f"{token.get_name().lower()}({_identifier(token.get_parameters(), alias_map, base_dict).lower()})")
+            is_count = False
             for par in token.tokens:
                 if isinstance(par, Identifier):
                     select_tokens.append(par.get_name().lower()+"(")
+                    is_count = par.get_name().lower() == "count"
                 if isinstance(par, Parenthesis):
-                    select_tokens[-1] += _select(par, alias_map, base_dict, True)+") as funcResult" 
+                    select_ident = _select(par, alias_map, base_dict, True)
+                    if is_count and not any(tok.value.upper() == "DISTINCT" for tok in par.tokens):
+                        select_ident = "*"
+                    select_tokens[-1] += select_ident +") as funcResult" 
         elif token.ttype is Wildcard:
             select_tokens.append("*")
         else:
