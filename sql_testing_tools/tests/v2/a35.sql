@@ -1,0 +1,2 @@
+SELECT COUNT(DISTINCT kreis) 
+FROM Gemeinde
