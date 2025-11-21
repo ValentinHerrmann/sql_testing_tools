@@ -1,42 +1,64 @@
-
-name: 'Bug: SQL-Example that was detected wrongly'
-about: Create a report to help us improve
-title: 'Bug: SQL-Example'
+name: "🐛 Bug Report"
+description: Something on Artemis is not working as expected? Create a report to help us improve.
 labels: [bug]
-assignees: ''
-
-
 body:
-
-The following aspects of the samples should be equal:
-- type: checkbox
+- type: markdown
   attributes:
-    label: Overall
-- type: checkbox
-  attributes:
-    label: Columns
-- type: checkbox
-  attributes:
-    label: Tables
-- type: checkbox
-  attributes:
-    label: Condition
-- type: checkbox
-  attributes:
-    label: Grouping
-- type: checkbox
-  attributes:
-    label: Ordering
-
+    value: Thanks for taking the time to fill out this bug report.
 - type: textarea
-  id: sqlA
   attributes:
-    label: SQL Sample 1
-    description: <<INSERT SQL QUERY SAMPLE 1>>
-    render: sql
+    label: Describe the bug
+    description: A clear and concise description of what the bug is.
+    placeholder: What happened? Also tell us, what did you expect to happen?
+  validations:
+      required: true
 - type: textarea
-  id: sqlB
   attributes:
-    label: SQL Sample 2
-    description: <<INSERT SQL QUERY SAMPLE 2>>
-    render: sql
+    label: To Reproduce
+    description: "Steps to reproduce the behavior:"
+    value: |
+      1. Go to '...'
+      2. Click on '...'
+      3. Scroll down to '...'
+      4. See error
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Expected behavior
+    description: A clear and concise description of what you expected to happen.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Screenshots
+    description: If applicable, add screenshots to help explain your problem.
+- type: input
+  attributes:
+    label: Which version of Artemis are you seeing the problem on?
+    description: The version is shown in the top-left in the title bar next to the logo.
+  validations:
+    required: true
+- type: dropdown
+  attributes:
+    label: What browsers are you seeing the problem on?
+    multiple: true
+    options:
+      - Chrome
+      - Safari
+      - Microsoft Edge
+      - Firefox
+      - Other (specify in "Additional context")
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Additional context
+    description: Add any other context about the problem here.
+- type: textarea
+  id: logs
+  attributes:
+    label: Relevant log output
+    description: Please copy and paste any relevant log output (e.g. from your Browsers "Web Console"). This will be automatically formatted into code, so no need for backticks.
+    render: shell
+
