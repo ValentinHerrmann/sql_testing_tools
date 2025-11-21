@@ -1,0 +1,71 @@
+name: "🐛Bug: SQL Comparison Example"
+description: Parts or complete SQL queries to not lead to the intended results.
+labels: [bug]
+title: "Queries with [XYZ] should be [equal/unequal] but aren't"
+body:
+- type: markdown
+  attributes:
+    value: Please stick to the title template
+  validations:
+      required: true
+      
+- type: dropdown
+  attributes:
+    label: Which database are you using?
+    multiple: true
+    options:
+      - dbiu.bahn
+      - dbiu.bayern
+      - dbiu.bundestag
+      - dbiu.bundestag_einfach
+      - dbiu.film_fernsehen
+      - dbiu.haushaltsausstattung
+      - dbiu.straftaten
+      - dbiu.straftaten_einfach
+      - dbiu.kunstsammlung
+      - dbiu.ladepunkte
+      - dbiu.laenderspiele
+      - dbiu.lebensmittel
+      - dbiu.schulstatistik
+      - dbiu.studierende
+      - dbiu.unfallstatistik
+      - dbiu.videospiele_einfach
+      - dbiu.videospiele
+      - dbiu.wetterdaten
+      - Other (please specify in additional context)
+  validations:
+    required: true
+- type: textarea
+  id: qA
+  attributes:
+    label: SQL Query 1
+    placeholder: SELECT id, amount FROM TableA
+    render: sql
+  validations:
+      required: true
+- type: textarea
+  id: aB
+  attributes:
+    label: SQL Query 2
+    placeholder: SELECT amount, id FROM TableA
+    render: sql
+  validations:
+      required: true
+- type: checkboxes
+  attributes:
+    label: Which aspects of the queries should be equal?
+    options:
+      - label: Overall
+      - label: Columns
+      - label: Tables
+      - label: Condition
+      - label: Grouping
+      - label: Ordering
+  validations:
+      required: true
+  
+- type: textarea
+  attributes:
+    label: Additional context
+    description: Add any other context about the problem here.
+
