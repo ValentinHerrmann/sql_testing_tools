@@ -1,11 +1,11 @@
 name: "🐛Bug: SQL Comparison Example"
 description: Parts or complete SQL queries to not lead to the intended results.
 labels: [bug]
-title: "Queries with [2-3 word query identification] should be [equal/unequal] but aren't"
+title: "Queries with [XYZ] should be [equal/unequal] but aren't"
 body:
 - type: markdown
   attributes:
-    value: Thanks for taking the time to fill out this bug report.
+    value: Please stick to the title template
   validations:
       required: true
       
