@@ -65,7 +65,7 @@ def __run(sql: str, db: str):
         con.commit()
         return cur
 
-def runFromFile(path: str):
+def runFromFile(path: str, limit: int = None):
     sql = getSQLFromFile(path)
     if not sql:
         raise Exception("\nSQL-Datei ist leer. Aufgabe wurde noch nicht bearbeitet.")
@@ -80,14 +80,18 @@ def runFromFile(path: str):
         raise Exception(f"\n\nSyntax-Fehler in der SQL-Abfrage:\n{str(e)}")
 
     headers = [h[0] for h in res.description] if res.description else []
-    rows = res.fetchall() if res else []
+    if limit:
+        rows = res.fetchmany(limit)
+    else:
+        rows = res.fetchall() if res else []
 
     return headers, rows
 
 
 def runAndGetStringTable_fromFile(path: str, count: int = 5, max_line_length: int = 85):
     try:
-        headers, rows = runFromFile(path)
+        limit = 1000
+        headers, rows = runFromFile(path, limit)
         result_count = len(rows)
         rows = rows[:count]
         s = ""
@@ -138,7 +142,10 @@ def runAndGetStringTable_fromFile(path: str, count: int = 5, max_line_length: in
             s += "\n" + normalized_rows[1]
 
             if (result_count > count):
-                s += "\n... " + str(result_count - count) + " weitere Zeilen"
+                if result_count == limit:
+                    s += "\n... mehr als " + str(limit) + " Zeilen"
+                else:
+                    s += "\n... " + str(result_count - count) + " weitere Zeilen"
             else:
                 s += "\n... keine weiteren Zeilen"
         s = "\n\nDiese Meldung sagt nichts über die Korrektheit der Abgabe aus!\nDie ersten " + str(
