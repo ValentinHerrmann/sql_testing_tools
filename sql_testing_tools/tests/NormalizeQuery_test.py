@@ -14,9 +14,10 @@ import Helper as He
 Ba.setDBName("dbiu.bayern")
 
 
-class NormalizeQuery_test(unittest.TestCase):
+class NormalizeQueryTest(unittest.TestCase):
 
     maxDiff = None
+    testSampleBasePath = "sql_testing_tools/tests/"
 
 
     def readFile(self,path: str):
@@ -25,26 +26,27 @@ class NormalizeQuery_test(unittest.TestCase):
             return file.read()
 
     def helperEqual(self, nr: str):
-        He.setup("sql_testing_tools/tests/v1/a"+nr+".sql", "sql_testing_tools/tests/v2/a"+nr+".sql")
+        He.setup(self.testSampleBasePath + "v1/a"+nr+".sql", self.testSampleBasePath + "v2/a"+nr+".sql")
         print("\n\nTest "+nr+"------------------------------")
         print("V1: "+He.sql)
         print("V2: "+He.sol)
         print("-------------------------------------\n\n")
         if He.sol != He.sql:
             self.fail("\n" + He.sol + "\n" + He.sql)
+        
 
-        col = He.checkColumns()
-        tab = He.checkTables()
-        grp = He.checkGroup()
-        ord = He.checkOrder()
+        ch_col = He.checkColumns()
+        ch_tab = He.checkTables()
+        ch_grp = He.checkGroup()
+        ch_ord = He.checkOrder()
 
-        if(col != "" or tab != "" or grp != "" or ord != ""):
-            self.fail("\n" + col + "\n" + tab + "\n" + grp + "\n" + ord)
+        if(ch_col != "" or ch_tab != "" or ch_grp != "" or ch_ord != ""):
+            self.fail("\n" + ch_col + "\n" + ch_tab + "\n" + ch_grp + "\n" + ch_ord)
             
     def helperUnequal(self, nr:str):
         td = Ba.getTableDict()
-        q1 = He.normalizeSQLQuery(self.readFile("sql_testing_tools/tests/v1/a"+nr+".sql"), td)
-        q2 = He.normalizeSQLQuery(self.readFile("sql_testing_tools/tests/v2/a"+nr+".sql"), td)
+        q1 = He.normalizeSQLQuery(self.readFile(self.testSampleBasePath + "v1/a"+nr+".sql"), td)
+        q2 = He.normalizeSQLQuery(self.readFile(self.testSampleBasePath + "v2/a"+nr+".sql"), td)
         print("\n\nTest "+nr+"------------------------------")
         print("V1: "+He.sql)
         print("V2: "+He.sol)
@@ -179,7 +181,7 @@ class NormalizeQuery_test(unittest.TestCase):
 
     def test_a22_GroupIsolated(self):
         nr='22'
-        res = He.checkGroup("sql_testing_tools/tests/v1/a"+nr+".sql", "sql_testing_tools/tests/v2/a"+nr+".sql")
+        res = He.checkGroup(self.testSampleBasePath + "v1/a"+nr+".sql", self.testSampleBasePath + "v2/a"+nr+".sql")
 
         if res == "":
             self.fail("Different grouping not recognized")
@@ -202,21 +204,20 @@ class NormalizeQuery_test(unittest.TestCase):
 
     def test_a27_detailCheckWrongOrder(self):
         nr = '27'
-        He.setup("sql_testing_tools/tests/v1/a"+nr+".sql", "sql_testing_tools/tests/v2/a"+nr+".sql")
+        He.setup(self.testSampleBasePath + "v1/a"+nr+".sql", self.testSampleBasePath + "v2/a"+nr+".sql")
 
-        col = He.checkColumns()
-        tab = He.checkTables()
-        grp = He.checkGroup()
-        ord = He.checkOrder()
+        ch_col = He.checkColumns()
+        ch_tab = He.checkTables()
+        ch_grp = He.checkGroup()
+        ch_ord = He.checkOrder()
 
         msg = "\n\n"
 
-        if(col==""):
+        if(ch_col==""):
             msg += "Spalten werden als richtig angezeigt, obwohl falsch\n"
 
-        if(tab != "" or grp != "" or ord != ""):
-            msg += tab + "\n" + grp + "\n" + ord
-
+        if(ch_tab != "" or ch_grp != "" or ch_ord != ""):
+            msg += ch_tab + "\n" + ch_grp + "\n" + ch_ord
         if msg != "\n\n":
             self.fail(msg)
             
@@ -224,3 +225,109 @@ class NormalizeQuery_test(unittest.TestCase):
     def test_a28_kreuzproduktA1(self):
         nr = '28'
         self.helperEqual(nr)
+        
+        
+    def test_a29_kreuzproduktA5(self):
+        
+        nr = '29'
+        He.setup(self.testSampleBasePath + "v1/a"+nr+".sql", self.testSampleBasePath + "v2/a"+nr+".sql")
+
+        ch_col = He.checkColumns()
+        ch_tab = He.checkTables()
+        ch_cond = He.checkCondition()
+        ch_grp = He.checkGroup()
+        ch_ord = He.checkOrder()    
+        msg = "\n\n"
+
+        if(ch_cond==""):
+            msg += "Bedingungen werden als korrekt angezeigt, obwohl falsch:\n"
+            msg += ("-------------------------------------\n")
+            msg += "V1: "+He.sql + "\n"
+            msg += "V2: "+He.sol + "\n"
+            msg += ("-------------------------------------\n")
+            
+
+        if(ch_col != "" or ch_tab != "" or ch_grp != "" or ch_ord != ""):
+            msg += ch_tab + "\n" + ch_grp + "\n" + ch_ord
+
+        if msg != "\n\n":
+            self.fail(msg)
+
+    def test_a30_kreuzproduktA5(self):
+        nr = '30'
+        self.helperEqual(nr)
+        
+    def test_a31_kreuzproduktA5(self):
+        nr = '31'
+        self.helperEqual(nr)
+        
+    
+    def test_a31_memory_leak(self):
+        try:
+            expected = '\n\nDiese Meldung sagt nichts über die Korrektheit der Abgabe aus!\nDie ersten 5 Zeilen des Ergebnisses der SQL-Abfrage:\n\nname                                                 \n-----------------------------------------------------\n Stadt Ochsenfurt / Kleinochsenfurter Weg (Strecke 2)\n Stadt Ochsenfurt / Kleinochsenfurter Weg (Strecke 2)\n Stadt Ochsenfurt / Kleinochsenfurter Weg (Strecke 2)\n Stadt Ochsenfurt / Kleinochsenfurter Weg (Strecke 2)\n Stadt Ochsenfurt / Kleinochsenfurter Weg (Strecke 2)\n-----------------------------------------------------\n... mehr als 1000 Zeilen'
+            anzahl_zeilen = 5
+            max_line_length = 85
+            val = Ba.runAndGetStringTable_fromFile(self.testSampleBasePath + "v1/a31.sql", anzahl_zeilen, max_line_length)
+            if(val != expected):
+                self.fail("Expected:\n" + expected + "\n\nGot:\n" + val)
+        except Exception as e:
+            self.fail(e)
+            
+    def test_a32_kreuzproduktA5(self):
+        
+        nr = '32'
+        He.setup(self.testSampleBasePath + "v1/a"+nr+".sql", self.testSampleBasePath + "v2/a"+nr+".sql")
+
+        ch_col = He.checkColumns()
+        ch_tab = He.checkTables()
+        ch_cond = He.checkCondition()
+        ch_grp = He.checkGroup()
+        ch_ord = He.checkOrder()    
+        msg = "\n\n"
+
+        if(ch_cond==""):
+            msg += "Bedingungen werden als korrekt angezeigt, obwohl falsch.\n"
+            
+        if(ch_tab==""):
+            msg += "Tabellen werden als richtig angezeigt, obwohl falsch.\n"
+            
+            
+            
+
+        if(ch_col != "" or ch_grp != "" or ch_ord != ""):
+            msg += ch_col + "\n" + ch_grp + "\n" + ch_ord
+
+        if msg != "\n\n":
+            msg += ("-------------------------------------\n")
+            msg += "V1: "+He.sql + "\n"
+            msg += "V2: "+He.sol + "\n"
+            msg += ("-------------------------------------\n")
+            self.fail(msg)
+            
+    
+    def test_a33_kreuzproduktA5(self):
+        nr = '33'
+        He.setup(self.testSampleBasePath + "v1/a"+nr+".sql", self.testSampleBasePath + "v2/a"+nr+".sql")
+
+        ch_col = He.checkColumns()
+        ch_tab = He.checkTables()
+        ch_cond = He.checkCondition()
+        ch_grp = He.checkGroup()
+        ch_ord = He.checkOrder()    
+        msg = "\n\n"
+
+        if(ch_cond==""):
+            msg += "Bedingungen werden als korrekt angezeigt, obwohl falsch."
+            
+            
+            
+
+        if(ch_tab != "" or ch_col != "" or ch_grp != "" or ch_ord != ""):
+            msg += ch_tab + "\n" + ch_col + "\n" + ch_grp + "\n" + ch_ord
+
+        if msg != "\n\n":
+            msg += ("-------------------------------------\n")
+            msg += "V1: "+He.sql + "\n"
+            msg += "V2: "+He.sol + "\n"
+            msg += ("-------------------------------------\n")
+            self.fail(msg)

@@ -26,22 +26,23 @@ dbMap = {
 }
 
 __db=""
+dbiu = 'dbiu.'
 
 def setDBName(database):
     global __db
 
-    if isinstance(database, str) and database.startswith("dbiu."):
-        dbVersion = dbMap.get(database)
+    if isinstance(database, str) and database.startswith(dbiu):
+        db_version = dbMap.get(database)
     elif isinstance(database, int):
-        dbVersion = database
-        database = "dbiu."+str(database)
+        db_version = database
+        database = dbiu+str(database)
     elif isinstance(database, str):
-        dbVersion = None
+        db_version = None
     else:
         raise Exception("Invalid database selected")
         
-    if(dbVersion is not None):
-        os.system('pip install dbiu_databases=='+str(dbVersion))
+    if(db_version is not None):
+        os.system('pip install dbiu_databases=='+str(db_version))
         try:
             import dbiu_databases
         except ImportError:
@@ -51,7 +52,7 @@ def setDBName(database):
 
     
 def run(sql: str):
-    if __db.startswith("dbiu.") and not __db.endswith(".db"):
+    if __db.startswith(dbiu) and not __db.endswith(".db"):
         with importlib.resources.path('dbiu_databases', "base.db") as db_path:
             return __run(sql, db_path)
     else:
@@ -64,7 +65,7 @@ def __run(sql: str, db: str):
         con.commit()
         return cur
 
-def runFromFile(path: str):
+def runFromFile(path: str, limit: int = None):
     sql = getSQLFromFile(path)
     if not sql:
         raise Exception("\nSQL-Datei ist leer. Aufgabe wurde noch nicht bearbeitet.")
@@ -79,15 +80,19 @@ def runFromFile(path: str):
         raise Exception(f"\n\nSyntax-Fehler in der SQL-Abfrage:\n{str(e)}")
 
     headers = [h[0] for h in res.description] if res.description else []
-    rows = res.fetchall() if res else []
+    if limit:
+        rows = res.fetchmany(limit)
+    else:
+        rows = res.fetchall() if res else []
 
     return headers, rows
 
 
-def runAndGetStringTable_fromFile(path: str, count: int = 5, maxLineLength: int = 85):
+def runAndGetStringTable_fromFile(path: str, count: int = 5, max_line_length: int = 85):
     try:
-        headers, rows = runFromFile(path)
-        resultCount = len(rows)
+        limit = 1000
+        headers, rows = runFromFile(path, limit)
+        result_count = len(rows)
         rows = rows[:count]
         s = ""
 
@@ -104,52 +109,51 @@ def runAndGetStringTable_fromFile(path: str, count: int = 5, maxLineLength: int 
                         matrix[col].append(rows[row][col])
 
             for col in range(len(matrix)):
-                maxLength = max([len(str(x)) for x in matrix[col]])
+                max_length = max([len(str(x)) for x in matrix[col]])
 
                 for row in range(0, len(matrix[col])):
-                    matrix[col][row] = str(matrix[col][row]).ljust(maxLength)
+                    matrix[col][row] = str(matrix[col][row]).ljust(max_length)
 
-            normalizedRows = []
+            normalized_rows = []
             spacing = "  "
-            spacingLength = len(spacing) * (len(matrix[0]) - 1)
+            spacing_length = len(spacing) * (len(matrix[0]) - 1)
 
-            lineLength = sum([len(x[0]) for x in matrix]) + spacingLength
+            line_length = sum([len(x[0]) for x in matrix]) + spacing_length
             
             
 
-            if lineLength > maxLineLength:
-                valLength = lineLength - spacingLength
-                maxColLength = int(maxLineLength/len(matrix))
+            if line_length > max_line_length:
+                max_col_length = int(max_line_length/len(matrix))
 
                 for col in range(len(matrix)):
                     for row in range(0, len(matrix[col])):
-                        cutContent = len(matrix[col][row].strip()) > maxColLength
-                        if cutContent:
-                            matrix[col][row] = matrix[col][row][:maxColLength-2] + ".."
+                        cut_content = len(matrix[col][row].strip()) > max_col_length
+                        if cut_content:
+                            matrix[col][row] = matrix[col][row][:max_col_length-2] + ".."
                         else:
-                            matrix[col][row] = matrix[col][row][:maxColLength]
+                            matrix[col][row] = matrix[col][row][:max_col_length]
 
 
             for row in range(min(count+1, len(matrix[0]))):
-                normalizedRows.append(spacing.join([str(matrix[col][row]) for col in range(len(matrix))]))
-            normalizedRows.insert(1, len(normalizedRows[0])*"-")
+                normalized_rows.append(spacing.join([str(matrix[col][row]) for col in range(len(matrix))]))
+            normalized_rows.insert(1, len(normalized_rows[0])*"-")
 
-            s = "\n".join(normalizedRows[:count+2])
-            s += "\n" + normalizedRows[1]
+            s = "\n".join(normalized_rows[:count+2])
+            s += "\n" + normalized_rows[1]
 
-            if (resultCount > count):
-                s += "\n... " + str(resultCount - count) + " weitere Zeilen"
+            if (result_count > count):
+                if result_count == limit:
+                    s += "\n... mehr als " + str(limit) + " Zeilen"
+                else:
+                    s += "\n... " + str(result_count - count) + " weitere Zeilen"
             else:
                 s += "\n... keine weiteren Zeilen"
-
-        #longestLineInS = 85 # max([len(x.replace("\t", "    ")) for x in s.split("\n")])
-
-        #s = "-" * longestLineInS + "\n" + s + "\n" + "-" * longestLineInS
         s = "\n\nDiese Meldung sagt nichts über die Korrektheit der Abgabe aus!\nDie ersten " + str(
             count) + " Zeilen des Ergebnisses der SQL-Abfrage:\n\n" + s
 
         return s.replace("None", "NULL")
     except Exception as ex:
+        print(ex)
         raise ex
 
 def getSQLFromFile(path: str):
