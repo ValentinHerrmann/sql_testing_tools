@@ -255,3 +255,19 @@ class NormalizeQueryTest(unittest.TestCase):
     def test_a30_kreuzproduktA5(self):
         nr = '30'
         self.helperEqual(nr)
+        
+    def test_a31_kreuzproduktA5(self):
+        nr = '31'
+        self.helperEqual(nr)
+        
+    
+    def test_a31_memory_leak(self):
+        try:
+            expected = '\n\nDiese Meldung sagt nichts über die Korrektheit der Abgabe aus!\nDie ersten 5 Zeilen des Ergebnisses der SQL-Abfrage:\n\nname                                                 \n-----------------------------------------------------\n Stadt Ochsenfurt / Kleinochsenfurter Weg (Strecke 2)\n Stadt Ochsenfurt / Kleinochsenfurter Weg (Strecke 2)\n Stadt Ochsenfurt / Kleinochsenfurter Weg (Strecke 2)\n Stadt Ochsenfurt / Kleinochsenfurter Weg (Strecke 2)\n Stadt Ochsenfurt / Kleinochsenfurter Weg (Strecke 2)\n-----------------------------------------------------\n... mehr als 1000 Zeilen'
+            anzahl_zeilen = 5
+            max_line_length = 85
+            val = Ba.runAndGetStringTable_fromFile(self.testSampleBasePath + "v1/a31.sql", anzahl_zeilen, max_line_length)
+            if(val != expected):
+                self.fail("Expected:\n" + expected + "\n\nGot:\n" + val)
+        except Exception as e:
+            self.fail(e)
