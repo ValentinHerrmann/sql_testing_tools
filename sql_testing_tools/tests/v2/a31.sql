@@ -1,2 +1,2 @@
-Select name
-From Gemeinde, Wanderweg_zu_Gemeinde, Wanderweg
+Select Wanderweg.name
+From Wanderweg, Gemeinde, Wanderweg_zu_Gemeinde

@@ -33,6 +33,7 @@ class NormalizeQueryTest(unittest.TestCase):
         print("-------------------------------------\n\n")
         if He.sol != He.sql:
             self.fail("\n" + He.sol + "\n" + He.sql)
+        
 
         ch_col = He.checkColumns()
         ch_tab = He.checkTables()
@@ -271,3 +272,62 @@ class NormalizeQueryTest(unittest.TestCase):
                 self.fail("Expected:\n" + expected + "\n\nGot:\n" + val)
         except Exception as e:
             self.fail(e)
+            
+    def test_a32_kreuzproduktA5(self):
+        
+        nr = '32'
+        He.setup(self.testSampleBasePath + "v1/a"+nr+".sql", self.testSampleBasePath + "v2/a"+nr+".sql")
+
+        ch_col = He.checkColumns()
+        ch_tab = He.checkTables()
+        ch_cond = He.checkCondition()
+        ch_grp = He.checkGroup()
+        ch_ord = He.checkOrder()    
+        msg = "\n\n"
+
+        if(ch_cond==""):
+            msg += "Bedingungen werden als korrekt angezeigt, obwohl falsch.\n"
+            
+        if(ch_tab==""):
+            msg += "Tabellen werden als richtig angezeigt, obwohl falsch.\n"
+            
+            
+            
+
+        if(ch_col != "" or ch_grp != "" or ch_ord != ""):
+            msg += ch_col + "\n" + ch_grp + "\n" + ch_ord
+
+        if msg != "\n\n":
+            msg += ("-------------------------------------\n")
+            msg += "V1: "+He.sql + "\n"
+            msg += "V2: "+He.sol + "\n"
+            msg += ("-------------------------------------\n")
+            self.fail(msg)
+            
+    
+    def test_a33_kreuzproduktA5(self):
+        nr = '33'
+        He.setup(self.testSampleBasePath + "v1/a"+nr+".sql", self.testSampleBasePath + "v2/a"+nr+".sql")
+
+        ch_col = He.checkColumns()
+        ch_tab = He.checkTables()
+        ch_cond = He.checkCondition()
+        ch_grp = He.checkGroup()
+        ch_ord = He.checkOrder()    
+        msg = "\n\n"
+
+        if(ch_cond==""):
+            msg += "Bedingungen werden als korrekt angezeigt, obwohl falsch."
+            
+            
+            
+
+        if(ch_tab != "" or ch_col != "" or ch_grp != "" or ch_ord != ""):
+            msg += ch_tab + "\n" + ch_col + "\n" + ch_grp + "\n" + ch_ord
+
+        if msg != "\n\n":
+            msg += ("-------------------------------------\n")
+            msg += "V1: "+He.sql + "\n"
+            msg += "V2: "+He.sol + "\n"
+            msg += ("-------------------------------------\n")
+            self.fail(msg)
