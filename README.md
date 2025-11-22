@@ -121,7 +121,36 @@ res = checkEquality()
 
 
 
-### Changelog
+## Changelog
+
+### Version 0.3 (since 0.2)
+#### SQL Features
+- Support `LIMIT` clause
+- Support `LIKE` operator
+- Support `<=` and `>=` (leq and geq)
+- Support `ASC`/`DESC` in `ORDER BY` (also with multiple columns and order directions), no direction treated as `ASC`
+- Support `NOT`
+- Accept `COUNT(colname)` in addition to `COUNT(*)`
+- Normalize string inequality: `<>`, `!=`, `NOT LIKE` → `NOT...LIKE...`
+- Ignore case in `=` string comparison and therefore `convert` to LIKE (if no `%`, `_` in string)
+
+#### Test Features
+- Added support for [dbiu.de](https://www.datenbanken-im-unterricht.de/catalog.php) databases 1-18 (loaded via [dbiu_databases](https://github.com/ValentinHerrmann/dbiu_databases)) with option to still load DBs from local repo
+- Added more check methods for single parts of queries: `checkColumns`, `checkTables`, `checkCondition`, `checkOrder`, `checkGroup`, `checkKeywords`
+- Improved documentation
+- Verified that `;`, whitespaces (at the ende of the query), and linebreaks are ignored
+
+#### Bug Fixes
+- Fixed bug when having only one column selected
+- Fixed handling of nested conditions with parantheses
+- Fixed memory problem with huge cross products (used to lead to build failed)
+- Fixed bug that forced irrelevant equality order if both sides aren't literals
+- Fixed part checks if keywords are in wrong order
+- Fixed bug in checkKeywords: if keyword was present in one query and not in the other, the comparison was not performed correctly
+
+
+<details>
+<summary>Detailed Changelogs of Versions 0.2.x</summary>
 
 ##### V 0.2.13
 - Acccept `COUNT(colname)`, too (instead of just `COUNT(*)`)
@@ -168,9 +197,35 @@ res = checkEquality()
 ##### V 0.2.1
 - Support LIMIT
   
+
+</details>
+
+---
+
+### Version 0.2
+#### SQL Features
+- Support SELECT: columns with our without table prefix
+- Support FROM: one or more table from DB; no queries as tables!
+- Support WHERE: single conditions; no Paranthesises!
+- Support GROUP BY one or more columns
+- Support Support ORDER BY
+- Support chained conditions (with AND,OR and Paranthesises) in WHERE statement
+- Support aggregate functions
+
+
+#### Bug Fixes
+- Fixed import error to ensure imports working in different environments
+- Fixed linebreak problems: Linebreaks are now converted into whitespaces before parsing where tokens
+
+
+
+
+
+<details>
+<summary>Detailed Changelogs of Versions 0.1.x</summary>
+
 ##### V 0.1.9 + 0.2.0
 - Support ORDER BY
-
 ##### V 0.1.8
 - Fixed linebreak problems: Linebreaks are now converted into whitespaces before parsing where tokens
 
@@ -187,3 +242,4 @@ res = checkEquality()
 - WHERE: single conditions; no Paranthesises!
 - GROUP BY one or more columns
 
+</details>
