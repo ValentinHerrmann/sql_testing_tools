@@ -22,7 +22,8 @@ dbMap = {
     "dbiu.unfallstatistik": 15,
     "dbiu.videospiele_einfach": 16,
     "dbiu.videospiele": 17,
-    "dbiu.wetterdaten": 18
+    "dbiu.wetterdaten": 18,
+    "dbiu.terra": 19
 }
 
 __db=""

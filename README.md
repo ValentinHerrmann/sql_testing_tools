@@ -62,6 +62,7 @@ Currently supported to use with DB name are:
 16. `dbiu.videospiele_einfach`: https://www.dbiu.de/videospiele
 17. `dbiu.videospiele`: https://www.dbiu.de/videospiele2
 18. `dbiu.wetterdaten`: https://www.dbiu.de/wetterdaten
+19. `dbiu.terra`: https://terra.sachsen.schule/
 
 **Option 2:** Use your own SQLite database with relative path starting at the working dir of your test repository.
 ``` python
@@ -148,6 +149,8 @@ res = checkEquality()
 - Fixed part checks if keywords are in wrong order
 - Fixed bug in checkKeywords: if keyword was present in one query and not in the other, the comparison was not performed correctly
 
+#### Other
+- added dbiu.terra database support
 
 <details>
 <summary>Detailed Changelogs of Versions 0.2.x</summary>
