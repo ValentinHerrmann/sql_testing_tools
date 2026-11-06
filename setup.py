@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='sql_testing_tools',
-    version='0.3.0',
+    version='0.3.1',
     packages=find_packages(),
     install_requires=[
         'sqlparse>=0.5.1',

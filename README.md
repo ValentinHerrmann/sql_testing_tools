@@ -135,6 +135,9 @@ res = checkEquality()
 
 ## Changelog
 
+### Version 0.3.1
+- added databases 20-30 (`dbiu.chinook`, `dbiu.bike`, `dbiu.schule`, `dbiu.pokemon`, `dbiu.netflix`, `dbiu.geodaten`, `dbiu.olympia`, `dbiu.passwoerter`, `dbiu.artikel`, `dbiu.bundesland`, `dbiu.sportverein`)
+
 ### Version 0.3 (since 0.2)
 #### SQL Features
 - Support `LIMIT` clause
@@ -162,7 +165,6 @@ res = checkEquality()
 
 #### Other
 - added dbiu.terra database support
-- added databases 20-30 (`dbiu.chinook`, `dbiu.bike`, `dbiu.schule`, `dbiu.pokemon`, `dbiu.netflix`, `dbiu.geodaten`, `dbiu.olympia`, `dbiu.passwoerter`, `dbiu.artikel`, `dbiu.bundesland`, `dbiu.sportverein`)
 
 <details>
 <summary>Detailed Changelogs of Versions 0.2.x</summary>
