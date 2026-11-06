@@ -23,7 +23,18 @@ dbMap = {
     "dbiu.videospiele_einfach": 16,
     "dbiu.videospiele": 17,
     "dbiu.wetterdaten": 18,
-    "dbiu.terra": 19
+    "dbiu.terra": 19,
+    "dbiu.chinook": 20,
+    "dbiu.bike": 21,
+    "dbiu.schule": 22,
+    "dbiu.pokemon": 23,
+    "dbiu.netflix": 24,
+    "dbiu.geodaten": 25,
+    "dbiu.olympia": 26,
+    "dbiu.passwoerter": 27,
+    "dbiu.artikel": 28,
+    "dbiu.bundesland": 29,
+    "dbiu.sportverein": 30
 }
 
 __db=""

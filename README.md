@@ -63,6 +63,17 @@ Currently supported to use with DB name are:
 17. `dbiu.videospiele`: https://www.dbiu.de/videospiele2
 18. `dbiu.wetterdaten`: https://www.dbiu.de/wetterdaten
 19. `dbiu.terra`: https://terra.sachsen.schule/
+20. `dbiu.chinook`: https://github.com/lerocha/chinook-database (Luis Rocha, v1.4.5)
+21. `dbiu.bike`: https://bike.oth-regensburg.de/downloadbereich-fuer-die-6-auflage.html (Edwin Schicker, "Datenbanken und SQL"; MySQL script `bikemysql-01.sql` from that page, converted to SQLite)
+22. `dbiu.schule`: https://www.learn-sql.de/doku.php?id=sqlide:datenbanken:schudatenbank:start (Martin Pabst; SQLite download on that page, rebuilt without non-standard `isDate()` checks)
+23. `dbiu.pokemon`: https://github.com/brianr852/Pokemon-Database (dump `Dump20160519-1.sql`, found via https://www.learn-sql.de/doku.php?id=sqlide:datenbanken:start; converted to SQLite, views dropped)
+24. `dbiu.netflix`: https://github.com/lerocha/netflixdb (Luis Rocha; Spring Batch tables and empty `episode` table removed)
+25. `dbiu.geodaten`: https://informatikschulbuch.de/jahrgangsstufe-9-uebersicht/datenmodellierung-und-datenbanken/#vorlagen (`WeitereDatenbanken_SQLLite.zip` on that page, Geodaten25)
+26. `dbiu.olympia`: https://informatikschulbuch.de/jahrgangsstufe-9-uebersicht/datenmodellierung-und-datenbanken/#vorlagen (`WeitereDatenbanken_SQLLite.zip` on that page)
+27. `dbiu.passwoerter`: https://informatikschulbuch.de/jahrgangsstufe-9-uebersicht/datenmodellierung-und-datenbanken/#vorlagen (`WeitereDatenbanken_SQLLite.zip` on that page, Passwoerter1 + Passwoerter2 as two tables)
+28. `dbiu.artikel`: https://informatikschulbuch.de/jahrgangsstufe-9-uebersicht/datenmodellierung-und-datenbanken/#vorlagen (`WeitereDatenbanken_SQLLite.zip` on that page)
+29. `dbiu.bundesland`: https://informatikschulbuch.de/jahrgangsstufe-9-uebersicht/datenmodellierung-und-datenbanken/#vorlagen (`WeitereDatenbanken_SQLLite.zip` on that page)
+30. `dbiu.sportverein`: https://informatikschulbuch.de/jahrgangsstufe-9-uebersicht/datenmodellierung-und-datenbanken/#vorlagen (`WeitereDatenbanken_SQLLite.zip` on that page)
 
 **Option 2:** Use your own SQLite database with relative path starting at the working dir of your test repository.
 ``` python
@@ -151,6 +162,7 @@ res = checkEquality()
 
 #### Other
 - added dbiu.terra database support
+- added databases 20-30 (`dbiu.chinook`, `dbiu.bike`, `dbiu.schule`, `dbiu.pokemon`, `dbiu.netflix`, `dbiu.geodaten`, `dbiu.olympia`, `dbiu.passwoerter`, `dbiu.artikel`, `dbiu.bundesland`, `dbiu.sportverein`)
 
 <details>
 <summary>Detailed Changelogs of Versions 0.2.x</summary>
